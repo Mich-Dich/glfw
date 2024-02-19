@@ -4,8 +4,8 @@ project "GLFW"
 	staticruntime "off"
 	warnings "off"
 
-	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+	targetdir ("bin/" .. outputs .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputs .. "/%{prj.name}")
 
 	files
 	{
@@ -29,7 +29,6 @@ project "GLFW"
 
 	filter "system:linux"
 		pic "On"
-
 		systemversion "latest"
 		
 		files
