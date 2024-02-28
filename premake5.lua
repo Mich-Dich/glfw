@@ -2,7 +2,7 @@ project "GLFW"
 	kind "StaticLib"
 	language "C"
 	staticruntime "off"
-	warnings "off"
+	-- warnings "off"
 
 	targetdir ("bin/" .. outputs .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputs .. "/%{prj.name}")
@@ -111,7 +111,10 @@ project "GLFW"
 		runtime "Release"
 		optimize "speed"
 
-    filter "configurations:Dist"
+	filter "configurations:RelWithDebInfo"
+		-- buildoptions "/MD"
+		-- defines "PFF_RELEASE_WITH_DEBUG_INFO"
 		runtime "Release"
+		symbols "on"
 		optimize "speed"
-        symbols "off"
+		
