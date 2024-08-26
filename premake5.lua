@@ -96,26 +96,25 @@ project "GLFW"
 			"_GLFW_WIN32",
 			"_CRT_SECURE_NO_WARNINGS"
 		}
-
-	filter "configurations:Debug"
-		runtime "Debug"
-		symbols "on"
-
+		
 	filter { "system:windows", "configurations:Debug-AS" }	
 		runtime "Debug"
 		symbols "on"
 		sanitize { "Address" }
 		flags { "NoRuntimeChecks", "NoIncrementalLink" }
 
-	filter "configurations:Release"
-		runtime "Release"
-		optimize "speed"
+	filter "configurations:Debug"
+		buildoptions "/MDd"
+		runtime "Debug"
+		symbols "on"
 
 	filter "configurations:RelWithDebInfo"
-		-- buildoptions "/MD"
-		-- defines "PFF_RELEASE_WITH_DEBUG_INFO"
-		buildoptions "/MD"
+		buildoptions "/MDd"
 		runtime "Release"
 		symbols "on"
 		optimize "speed"
-		
+
+	filter "configurations:Release"
+		buildoptions "/MD"
+		runtime "Release"
+		optimize "speed"
