@@ -1,8 +1,6 @@
 project "GLFW"
 	kind "StaticLib"
 	language "C"
-	staticruntime "off"
-	-- warnings "off"
 
 	targetdir ("bin/" .. outputs .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputs .. "/%{prj.name}")
@@ -16,31 +14,31 @@ project "GLFW"
 		"src/init.c",
 		"src/input.c",
 		"src/monitor.c",
-
-		"src/null_init.c",
-		"src/null_joystick.c",
-		"src/null_monitor.c",
-		"src/null_window.c",
-
-		"src/platform.c",
 		"src/vulkan.c",
 		"src/window.c",
-	}
+		"src/platform.c",
 
+		"src/null_init.c",
+		"src/null_platform.h",
+		"src/null_window.c",
+		"src/null_monitor.c",
+		"src/null_joystick.h",
+		"src/null_joystick.c",
+	}
 	filter "system:linux"
 		pic "On"
+
 		systemversion "latest"
-		
+		staticruntime "On"
+
 		files
 		{
 			"src/x11_init.c",
 			"src/x11_monitor.c",
 			"src/x11_window.c",
 			"src/xkb_unicode.c",
-			"src/posix_module.c",
 			"src/posix_time.c",
 			"src/posix_thread.c",
-			"src/posix_module.c",
 			"src/glx_context.c",
 			"src/egl_context.c",
 			"src/osmesa_context.c",
@@ -52,43 +50,22 @@ project "GLFW"
 			"_GLFW_X11"
 		}
 
-	filter "system:macosx"
-		pic "On"
-
-		files
-		{
-			"src/cocoa_init.m",
-			"src/cocoa_monitor.m",
-			"src/cocoa_window.m",
-			"src/cocoa_joystick.m",
-			"src/cocoa_time.c",
-			"src/nsgl_context.m",
-			"src/posix_thread.c",
-			"src/posix_module.c",
-			"src/osmesa_context.c",
-			"src/egl_context.c"
-		}
-
-		defines
-		{
-			"_GLFW_COCOA"
-		}
-
 	filter "system:windows"
 		systemversion "latest"
+		staticruntime "On"
 
 		files
 		{
 			"src/win32_init.c",
 			"src/win32_joystick.c",
-			"src/win32_module.c",
 			"src/win32_monitor.c",
 			"src/win32_time.c",
 			"src/win32_thread.c",
 			"src/win32_window.c",
 			"src/wgl_context.c",
 			"src/egl_context.c",
-			"src/osmesa_context.c"
+			"src/osmesa_context.c",
+			"src/win32_module.c",
 		}
 
 		defines 
@@ -97,24 +74,15 @@ project "GLFW"
 			"_CRT_SECURE_NO_WARNINGS"
 		}
 		
-	filter { "system:windows", "configurations:Debug-AS" }	
-		runtime "Debug"
-		symbols "on"
-		sanitize { "Address" }
-		flags { "NoRuntimeChecks", "NoIncrementalLink" }
-
 	filter "configurations:Debug"
-		buildoptions "/MDd"
 		runtime "Debug"
 		symbols "on"
 
 	filter "configurations:RelWithDebInfo"
-		buildoptions "/MDd"
 		runtime "Release"
 		symbols "on"
-		optimize "speed"
+		optimize "on"
 
 	filter "configurations:Release"
-		buildoptions "/MD"
 		runtime "Release"
-		optimize "speed"
+		optimize "on"
