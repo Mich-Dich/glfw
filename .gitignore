@@ -18,6 +18,8 @@ RelWithDebInfo
 *.opensdf
 
 # Xcode clutter
+/build
+build/
 GLFW.build
 GLFW.xcodeproj
 
